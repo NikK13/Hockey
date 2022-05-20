@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hockey/data/model/team.dart';
 import 'package:hockey/data/utils/app.dart';
+import 'package:hockey/data/utils/appnavigator.dart';
 import 'package:hockey/data/utils/localization.dart';
 import 'package:hockey/main.dart';
 import 'package:hockey/ui/dialog/team_choose_dialog.dart';
 import 'package:hockey/ui/editor/edit_team.dart';
+import 'package:hockey/ui/mobile/match_mobile.dart';
 import 'package:hockey/ui/widgets/appbar.dart';
 import 'package:hockey/ui/widgets/backgrounded.dart';
 import 'package:hockey/ui/widgets/platform_button.dart';
@@ -313,7 +315,10 @@ class _QuickMatchSelectMobileState extends State<QuickMatchSelectMobile> {
                   child: PlatformButton(
                     text: "Proceed to game",
                     onPressed: (){
-
+                      AppNavigator.of(context).push(MatchMobilePage(
+                        homeTeam: _homeTeam,
+                        awayTeam: _awayTeam,
+                      ));
                     }
                   ),
                 ),

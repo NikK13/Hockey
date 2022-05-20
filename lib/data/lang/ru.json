@@ -25,5 +25,13 @@
   "try_again": "Попробовать снова",
   "type_hint": "Напишите что-нибудь",
   "quick_game": "Быстрая игра",
-  "wait": "Пожалуйста, ждите.."
+  "wait": "Пожалуйста, ждите..",
+
+  "attack_zone": "TEAM в зоне соперника",
+  "events": "EVENTS_BELOW",
+  "game_start": "Добро пожаловать на матч между HOME и AWAY",
+  "face_off": "Вбрасывание выиграл(а) _",
+  "interception": "Перехват командной TEAM",
+  "off_side": "Офсайд у TEAM",
+  "pass": "Пас от P1 на P2"
 }

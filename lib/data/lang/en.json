@@ -25,5 +25,15 @@
   "try_again": "Try again",
   "type_hint": "Type something",
   "quick_game": "Quick game",
-  "wait": "Please, wait.."
+  "wait": "Please, wait..",
+
+  "attack_zone": "TEAM in attack zone",
+  "events": "EVENTS_BELOW",
+  "game_start": "Welcome to the game between HOME and AWAY",
+  "face_off": "Face off won by _",
+  "interception": "Interception by TEAM",
+  "off_side": "It's offside for TEAM",
+  "pass": "Pass from P1 to P2",
+  "period_end": "End of the period",
+  "period_start": "Start of the period"
 }

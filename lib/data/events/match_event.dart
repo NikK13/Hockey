@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-
 class MatchEvent{
-  final BuildContext? context;
-  final List<MatchEvent> events = [];
+  String? comment;
 
-  MatchEvent({this.context});
+  MatchEvent({
+    this.comment
+  });
 }

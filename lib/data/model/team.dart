@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:hockey/data/model/player.dart';
 import 'package:hockey/main.dart';
 
@@ -10,11 +12,13 @@ class Team{
   String? arena;
   int? capacity;
   int? farmId;
+  int? curLine;
   String? conference;
   String? division;
   String? abbreviation;
   String? color;
   String? emblem;
+  List<Player>? roster;
 
   Team({
     this.id,
@@ -27,9 +31,11 @@ class Team{
     this.capacity,
     this.conference,
     this.division,
+    this.curLine,
     this.abbreviation,
     this.color,
-    this.emblem
+    this.emblem,
+    this.roster
   });
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +75,46 @@ class Team{
 
   Future<List<Player>> get teamPlayers async{
     return await databaseBloc.fetchPlayersFromTeam(id ?? 1);
+  }
+
+  List<Player> getLineUp(List<Player> players, int line){
+    if(line == 1){
+      return [
+        players.firstWhere((pl) => pl.teamPosition == 0),
+        players.firstWhere((pl) => pl.teamPosition == 1),
+        players.firstWhere((pl) => pl.teamPosition == 2),
+        players.firstWhere((pl) => pl.teamPosition == 12),
+        players.firstWhere((pl) => pl.teamPosition == 13)
+      ];
+    }
+    if(line == 2){
+      return [
+        players.firstWhere((pl) => pl.teamPosition == 3),
+        players.firstWhere((pl) => pl.teamPosition == 4),
+        players.firstWhere((pl) => pl.teamPosition == 5),
+        players.firstWhere((pl) => pl.teamPosition == 14),
+        players.firstWhere((pl) => pl.teamPosition == 15)
+      ];
+    }
+    if(line == 3){
+      return [
+        players.firstWhere((pl) => pl.teamPosition == 6),
+        players.firstWhere((pl) => pl.teamPosition == 7),
+        players.firstWhere((pl) => pl.teamPosition == 8),
+        players.firstWhere((pl) => pl.teamPosition == 16),
+        players.firstWhere((pl) => pl.teamPosition == 17)
+      ];
+    }
+    else{
+      final ld = 12 + Random().nextInt(2);
+      final rd = 15 + Random().nextInt(2);
+      return [
+        players.firstWhere((pl) => pl.teamPosition == 9),
+        players.firstWhere((pl) => pl.teamPosition == 10),
+        players.firstWhere((pl) => pl.teamPosition == 11),
+        players.firstWhere((pl) => pl.teamPosition == ld),
+        players.firstWhere((pl) => pl.teamPosition == rd)
+      ];
+    }
   }
 }
