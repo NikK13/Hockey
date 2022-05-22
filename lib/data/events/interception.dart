@@ -8,13 +8,16 @@ import 'package:hockey/data/model/team.dart';
 import 'package:hockey/data/utils/localization.dart';
 
 class Interception extends MatchEvent{
-  Interception(BuildContext context, Team at, Team df, GameMatch match){
-    comment = AppLocalizations.of(context, 'interception').replaceAll("TEAM", df.teamName!);
-    if(!match.ifPeriodEnd){
-      match.events.add(PassFromCenter(context, df, at, match));
-    }
-    else{
-      match.events.add(PeriodOver(context, at, df, match));
+  final BuildContext context;
+  final Team attTeam;
+  final Team defTeam;
+  final GameMatch match;
+
+  Interception(this.context, this.attTeam, this.defTeam, this.match){
+    comment = AppLocalizations.of(context, 'interception').replaceAll("TEAM", defTeam.teamName!);
+    GameMatch.kp++;
+    if(GameMatch.kp <= GameMatch.maxMoments){
+      match.events.add(PassFromCenter(context, defTeam, attTeam, match));
     }
   }
 }

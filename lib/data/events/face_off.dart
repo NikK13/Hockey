@@ -8,23 +8,36 @@ import 'package:hockey/data/model/team.dart';
 import 'package:hockey/data/utils/localization.dart';
 
 class FaceOff extends MatchEvent{
-  FaceOff(BuildContext context, Team t1, Team t2, GameMatch match, [bool start = false]){
+  final BuildContext context;
+  final Team attTeam;
+  final Team defTeam;
+  final GameMatch match;
+
+  FaceOff(this.context, this.attTeam, this.defTeam, this.match, [bool start = false]){
     final val = 0 + Random().nextInt(100);
+    attTeam.curLine = 1 + Random().nextInt(3);
+    defTeam.curLine = 1 + Random().nextInt(3);
     Team attackingTeam, defendingTeam;
-    if(val < 50){
-      attackingTeam = t1;
-      defendingTeam = t2;
+    final attPl = attTeam.getLineUp(attTeam.roster!, attTeam.curLine!)[1];
+    final defPl = defTeam.getLineUp(defTeam.roster!, defTeam.curLine!)[1];
+    int poss;
+    if(attPl.skill! < defPl.skill!){
+      poss = 50 - (defPl.skill! - attPl.skill!);
     }
     else{
-      attackingTeam = t2;
-      defendingTeam = t1;
+      poss = 50 + (attPl.skill! - defPl.skill!);
+    }
+    if(val < poss){
+      attackingTeam = attTeam;
+      defendingTeam = defTeam;
+    }
+    else{
+      attackingTeam = defTeam;
+      defendingTeam = attTeam;
     }
     comment = AppLocalizations.of(context, 'face_off').replaceAll("_", attackingTeam.teamName!);
-    if(!match.ifPeriodEnd){
+    if(GameMatch.kp <= GameMatch.maxMoments){
       match.events.add(PassFromCenter(context, attackingTeam, defendingTeam, match));
-    }
-    else{
-      match.events.add(PeriodOver(context, attackingTeam, defendingTeam, match));
     }
   }
 }

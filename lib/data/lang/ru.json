@@ -30,8 +30,13 @@
   "attack_zone": "TEAM в зоне соперника",
   "events": "EVENTS_BELOW",
   "game_start": "Добро пожаловать на матч между HOME и AWAY",
+  "goalie_save": "Хороший сэйв от GOALIE",
   "face_off": "Вбрасывание выиграл(а) _",
   "interception": "Перехват командной TEAM",
   "off_side": "Офсайд у TEAM",
-  "pass": "Пас от P1 на P2"
+  "pass": "Пас от P1 на P2",
+  "shot_block": "Бросок заблокировал PLAYER",
+  "shot_from": "Бросок от PLAYER",
+  "shot_missed": "Мимо ворот",
+  "shot_save": "Хороший сэйв от PLAYER"
 }

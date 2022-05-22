@@ -3,11 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hockey/data/events/game_start.dart';
+import 'package:hockey/data/events/goal.dart';
 import 'package:hockey/data/events/match.dart';
 import 'package:hockey/data/events/match_event.dart';
+import 'package:hockey/data/events/period_over.dart';
+import 'package:hockey/data/events/period_start.dart';
 import 'package:hockey/data/model/player.dart';
 import 'package:hockey/data/model/team.dart';
 import 'package:hockey/data/utils/app.dart';
+import 'package:hockey/data/utils/appnavigator.dart';
 import 'package:hockey/data/utils/extensions.dart';
 import 'package:hockey/data/utils/localization.dart';
 import 'package:hockey/main.dart';
@@ -37,14 +41,16 @@ class _MatchMobilePageState extends State<MatchMobilePage> {
 
   Timer? timer;
 
+  int _period = 0;
+
   Team get home => widget.homeTeam!;
   Team get away => widget.awayTeam!;
 
-  final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
+  List<MatchEvent> goals = [];
 
   @override
   void initState(){
-    match = GameMatch(context: context);
+    match = GameMatch();
     initRosters();
     super.initState();
   }
@@ -124,7 +130,7 @@ class _MatchMobilePageState extends State<MatchMobilePage> {
                                     ),
                                   )
                                 ),
-                                const Text("20:00", style: TextStyle(color: Colors.black)),
+                                Text("${periodTitle()}", style: const TextStyle(color: Colors.black)),
                               ],
                             ),
                           ),
@@ -153,11 +159,37 @@ class _MatchMobilePageState extends State<MatchMobilePage> {
                   ),
                   const SizedBox(height: 12),
                   SizedBox(
-                    width: 120,
+                    width: 140,
                     child: PlatformButton(
-                      text: "Start",
+                      text: _period < 3 ? "Proceed" : "Finish",
                       onPressed: (){
-                        generateEvents(context);
+                        if(_period < 3){
+                          generateEvents(context);
+                          setState((){
+                            _period++;
+                          });
+                        }
+                        else{
+                          AppNavigator.of(context).pop(ctx: context);
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: goals.length,
+                      itemBuilder: (context, index){
+                        final item = goals[index] as Goal;
+                        return Center(
+                          child: Text(
+                            item.comment!,
+                            style: const TextStyle(
+                              fontSize: 11
+                            ),
+                          ),
+                        );
                       },
                     ),
                   )
@@ -170,16 +202,40 @@ class _MatchMobilePageState extends State<MatchMobilePage> {
     );
   }
 
+  String periodTitle(){
+    switch(_period){
+      case 0:
+        return "Game start";
+      case 1:
+        return "End of 1st";
+      case 2:
+        return "End of 2st";
+      case 3:
+        return "End of 3st";
+      default:
+        return "";
+    }
+  }
+
   void generateEvents(BuildContext context){
     home.curLine = 1;
     away.curLine = 1;
-    if(match!.events.isNotEmpty){
-      match!.events.clear();
+    GameMatch.kp = 0;
+    match!.events.clear();
+    if(_period == 0){
+      match!.events.add(GameStart(context, home, away, match!));
     }
-    match!.events.add(GameStart(context, home, away, match!));
-    final ev = match!.events.reversed.toList();
-    for(var event in ev){
+    else{
+      match!.events.add(PeriodStart(context, home, away, match!));
+    }
+    var ev = match!.events.reversed.toList();
+    goals.addAll(match!.events.reversed.whereType<Goal>());
+    match!.homeScore = goals.where((element) => (element as Goal).scoredTeam!.id! == home.id!).toList().length;
+    match!.awayScore = goals.where((element) => (element as Goal).scoredTeam!.id! == away.id!).toList().length;
+    //ev.add(PeriodOver(context, home, away, match!));
+    /*for(var event in ev){
       debugPrint("${event.comment}");
-    }
+    }*/
+    //debugPrint("${GameMatch.kp}");
   }
 }

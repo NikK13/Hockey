@@ -151,34 +151,34 @@ class PlayerGenerator{
 
   static int? skillFromAHLPos(int teamPos){
     if(teamPos.isBetween(0, 2)){
-      return 79 + Random().nextInt(1);
+      return 77 + Random().nextInt(1);
     }
     else if(teamPos.isBetween(3, 5)){
-      return 75 + Random().nextInt(3);
+      return 74 + Random().nextInt(3);
     }
     else if(teamPos.isBetween(6, 8)){
-      return 72 + Random().nextInt(3);
+      return 71 + Random().nextInt(3);
     }
     else if(teamPos.isBetween(9, 11)){
-      return 71 + Random().nextInt(2);
+      return 69 + Random().nextInt(2);
     }
     else if(teamPos.isBetween(12, 13)){
-      return 77 + Random().nextInt(2);
+      return 75 + Random().nextInt(2);
     }
     else if(teamPos.isBetween(14, 15)){
-      return 74 + Random().nextInt(2);
+      return 73 + Random().nextInt(2);
     }
     else if(teamPos.isBetween(16, 17)){
-      return 72 + Random().nextInt(2);
+      return 71 + Random().nextInt(2);
     }
     else if(teamPos == 18){
-      return 75 + Random().nextInt(4);
+      return 74 + Random().nextInt(4);
     }
     else if(teamPos == 19){
-      return 72 + Random().nextInt(4);
+      return 71 + Random().nextInt(4);
     }
     else{
-      return 69 + Random().nextInt(2);
+      return 69 + Random().nextInt(5);
     }
   }
 

@@ -30,10 +30,15 @@
   "attack_zone": "TEAM in attack zone",
   "events": "EVENTS_BELOW",
   "game_start": "Welcome to the game between HOME and AWAY",
+  "goalie_save": "Nice save by GOALIE",
   "face_off": "Face off won by _",
   "interception": "Interception by TEAM",
-  "off_side": "It's offside for TEAM",
+  "off_side": "It's offside against TEAM",
   "pass": "Pass from P1 to P2",
   "period_end": "End of the period",
-  "period_start": "Start of the period"
+  "period_start": "Start of the period",
+  "shot_block": "Shot blocked by PLAYER",
+  "shot_from": "Shot from PLAYER",
+  "shot_missed": "Missed the net",
+  "shot_save": "Save by PLAYER"
 }

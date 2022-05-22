@@ -6,8 +6,13 @@ import 'package:hockey/data/model/team.dart';
 import 'package:hockey/data/utils/localization.dart';
 
 class GameStart extends MatchEvent{
-  GameStart(BuildContext context, Team t1, Team t2, GameMatch match){
-    comment = AppLocalizations.of(context, 'game_start').replaceAll("HOME", t1.teamName!).replaceAll("AWAY", t2.teamName!);
-    match.events.add(FaceOff(context, t1, t2, match, true));
+  final BuildContext context;
+  final Team attTeam;
+  final Team defTeam;
+  final GameMatch match;
+
+  GameStart(this.context, this.attTeam, this.defTeam, this.match){
+    comment = AppLocalizations.of(context, 'game_start').replaceAll("HOME", attTeam.teamName!).replaceAll("AWAY", defTeam.teamName!);
+    match.events.add(FaceOff(context, attTeam, defTeam, match, true));
   }
 }
